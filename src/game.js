@@ -9,7 +9,13 @@ const VIEW_WIDTH = 320;
 const VIEW_HEIGHT = 180;
 const MAP_SIZE = { w: 80, h: 60, x: 10, y: 10 };
 
-<<<<<<< feature/canvas-framework
+// 常量配置
+const WORLD_WIDTH = 800;
+const WORLD_HEIGHT = 600;
+const VIEW_WIDTH = 320;
+const VIEW_HEIGHT = 180;
+const MAP_SIZE = { w: 80, h: 60, x: 10, y: 10 };
+
 // 玩家位置
 let player = { 
     x: WORLD_WIDTH / 2,
@@ -26,17 +32,9 @@ let solids = [];
 let decorations = [];
 
 // 输入状态
-=======
-let player = { x: 400, y: 300 };
-let bullets = [];
-let lastShotTime = 0;
-const shotCooldown = 200; // 毫秒
-
->>>>>>> main
 const keys = {};
 const mouse = { x: 0, y: 0, left: false };
 
-<<<<<<< feature/canvas-framework
 // 摄像机
 const camera = { x: 0, y: 0 };
 
@@ -48,31 +46,15 @@ floorImage.src = 'assets/dungeon_floor.png'; // 请确保图片存在
 window.addEventListener('keydown', e => {
     if (e.key.startsWith('Arrow') || 'wasd'.includes(e.key.toLowerCase())) e.preventDefault();
     keys[e.key.toLowerCase()] = true;
-=======
-window.addEventListener('keydown', (e) => { keys[e.key] = true; });
-window.addEventListener('keyup', (e) => { keys[e.key] = false; });
-
-canvas.addEventListener('click', (e) => {
-    // 冷却判断
-    const now = Date.now();
-    if (now - lastShotTime < shotCooldown) return;
-    lastShotTime = now;
-
+});
+window.addEventListener('keyup', e => keys[e.key.toLowerCase()] = false);
+canvas.addEventListener('mousemove', e => {
     const rect = canvas.getBoundingClientRect();
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
-
-    const dx = mouseX - player.x;
-    const dy = mouseY - player.y;
-    const length = Math.sqrt(dx * dx + dy * dy);
-    if (length === 0) return;
-
-    const speed = 5;
-    const vx = (dx / length) * speed;
-    const vy = (dy / length) * speed;
-
-    bullets.push({ x: player.x, y: player.y, vx, vy });
->>>>>>> main
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    mouse.screenX = (e.clientX - rect.left) * scaleX;
+    mouse.screenY = (e.clientY - rect.top) * scaleY;
+});
 });
 window.addEventListener('keyup', e => keys[e.key.toLowerCase()] = false);
 canvas.addEventListener('mousemove', e => {
@@ -154,7 +136,6 @@ function drawWorld() {
     ctx.fillStyle = '#000';
     ctx.fillRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
 
-<<<<<<< feature/canvas-framework
     // 世界可见矩形
     const worldLeft = Math.max(0, camera.x);
     const worldRight = Math.min(WORLD_WIDTH, camera.x + VIEW_WIDTH);
@@ -229,40 +210,6 @@ function drawMinimap() {
     const pmx = MAP_SIZE.x + (player.x / WORLD_WIDTH) * MAP_SIZE.w;
     const pmy = MAP_SIZE.y + (player.y / WORLD_HEIGHT) * MAP_SIZE.h;
     ctx.fillRect(pmx - 2, pmy - 2, 4, 4);
-=======
-function update() {
-    if (keys['w'] || keys['W'] || keys['ArrowUp']) player.y -= 3;
-    if (keys['s'] || keys['S'] || keys['ArrowDown']) player.y += 3;
-    if (keys['a'] || keys['A'] || keys['ArrowLeft']) player.x -= 3;
-    if (keys['d'] || keys['D'] || keys['ArrowRight']) player.x += 3;
-
-    player.x = Math.max(0, Math.min(canvas.width, player.x));
-    player.y = Math.max(0, Math.min(canvas.height, player.y));
-
-    for (let i = bullets.length - 1; i >= 0; i--) {
-        const b = bullets[i];
-        b.x += b.vx;
-        b.y += b.vy;
-        if (b.x < 0 || b.x > canvas.width || b.y < 0 || b.y > canvas.height) {
-            bullets.splice(i, 1);
-        }
-    }
-}
-
-function draw() {
-    ctx.fillStyle = '#222';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    ctx.fillStyle = '#fff';
-    ctx.fillRect(player.x - 10, player.y - 10, 20, 20);
-
-    ctx.fillStyle = 'yellow';
-    bullets.forEach(b => {
-        ctx.beginPath();
-        ctx.arc(b.x, b.y, 3, 0, Math.PI * 2);
-        ctx.fill();
-    });
->>>>>>> main
 }
 
 // ----- 初始化场景-----

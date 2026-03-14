@@ -3,12 +3,27 @@
 <head>
     <title>Gun Adventure</title>
     <style>
-        body { margin: 0; padding: 0; overflow: hidden; background: #000; }
-        canvas { display: block; margin: auto; background: #222; }
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        canvas {
+            width: min(100vw, calc(100vh * 320/180));
+            height: auto;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges; /* 备用 */
+            /* 移除背景色，由JS绘制 */
+        }
     </style>
 </head>
 <body>
-    <canvas id="gameCanvas" width="800" height="600"></canvas>
-    <script src="game.js"></script>
+    <canvas id="gameCanvas" width="320" height="180"></canvas>
+    <script src="testgame2.js"></script>
 </body>
 </html>
