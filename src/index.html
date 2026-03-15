@@ -17,13 +17,12 @@
             width: min(100vw, calc(100vh * 320/180));
             height: auto;
             image-rendering: pixelated;
-            image-rendering: crisp-edges; /* 备用 */
-            /* 移除背景色，由JS绘制 */
+            image-rendering: crisp-edges;
         }
     </style>
 </head>
 <body>
     <canvas id="gameCanvas" width="320" height="180"></canvas>
-    <script src="game.js"></script>
+    <script type="module" src="main.js"></script>
 </body>
 </html>
